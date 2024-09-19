@@ -86,7 +86,7 @@ namespace Analisis_Numerico
             botonCerrar.BackColor = Color.FromArgb(231, 76, 60);
             botonCerrar.FlatStyle = FlatStyle.Flat;
             botonCerrar.FlatAppearance.BorderSize = 0;
-           
+
             botonCerrar.Click += new EventHandler((sender, e) =>
             {
                 MenuPrincipal menu = new MenuPrincipal();
@@ -97,7 +97,7 @@ namespace Analisis_Numerico
             tituloBarra.Controls.Add(tituloEtiqueta);
             tituloBarra.Controls.Add(botonCerrar);
 
-          
+
             Button botonMaximizar = new Button();
             botonMaximizar.Text = "□";
             botonMaximizar.Dock = DockStyle.Right;
@@ -106,15 +106,15 @@ namespace Analisis_Numerico
             botonMaximizar.BackColor = fondo;
             botonMaximizar.FlatStyle = FlatStyle.Flat;
             botonMaximizar.FlatAppearance.BorderSize = 0;
-           
+
             botonMaximizar.Click += (s, e) =>
             {
                 this.WindowState = this.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
             };
-            
+
             botonMaximizar.Click += (s, e) =>
             {
-                webview.Size = new Size(this.Width -500, this.Height - 100);
+                webview.Size = new Size(this.Width - 500, this.Height - 100);
             };
 
             Button botonMinimizar = new Button();
@@ -127,13 +127,13 @@ namespace Analisis_Numerico
             botonMinimizar.FlatAppearance.BorderSize = 0;
             botonMinimizar.Click += (s, e) => this.WindowState = FormWindowState.Minimized;
 
-          
+
             tituloBarra.Controls.Add(tituloEtiqueta);
             tituloBarra.Controls.Add(botonMinimizar);
             tituloBarra.Controls.Add(botonMaximizar);
             tituloBarra.Controls.Add(botonCerrar);
-          
-            this.Controls.Add(tituloBarra);         
+
+            this.Controls.Add(tituloBarra);
             tituloBarra.MouseDown += tituloBarra_MouseDown;
             tituloBarra.MouseMove += tituloBarra_MouseMove;
             tituloBarra.MouseUp += tituloBarra_MouseUp;
@@ -142,7 +142,7 @@ namespace Analisis_Numerico
             BotonCalcular.BackColor = boton;
             BotonCalcular.ForeColor = textoBoton;
             BotonCalcular.FlatStyle = FlatStyle.Flat;
-            BotonCalcular.Size = new Size(200, 60);
+            BotonCalcular.Size = new Size(130, 60);
             BotonCalcular.FlatAppearance.BorderSize = 0;
             BotonCalcular.MouseEnter += (s, e) => BotonCalcular.BackColor = Color.FromArgb(204, 60, 49); // Efecto hover
             BotonCalcular.MouseLeave += (s, e) => BotonCalcular.BackColor = boton;
@@ -150,7 +150,7 @@ namespace Analisis_Numerico
             BotonSalirRaices.BackColor = boton;
             BotonSalirRaices.ForeColor = textoBoton;
             BotonSalirRaices.FlatStyle = FlatStyle.Flat;
-            BotonSalirRaices.Size = new Size(200, 60);
+            BotonSalirRaices.Size = new Size(130, 60);
             BotonSalirRaices.FlatAppearance.BorderSize = 0;
             BotonSalirRaices.MouseEnter += (s, e) => BotonSalirRaices.BackColor = Color.FromArgb(204, 60, 49); // Efecto hover
             BotonSalirRaices.MouseLeave += (s, e) => BotonSalirRaices.BackColor = boton;
@@ -298,7 +298,7 @@ namespace Analisis_Numerico
             double xrAnterior = 0;
             double xr = 0;
             double error = double.MaxValue;
-            
+
             for (int i = 0; i < maxIteraciones; i++)
             {
                 iteraciones = i;
@@ -319,11 +319,13 @@ namespace Analisis_Numerico
                 {
                     xdCerrado = xr;
                 }
-
+                iteracionesP.Text = iteraciones.ToString();
                 xrAnterior = xr;
+                textBoxError.Text = error.ToString();
             }
             MessageBox.Show($"El método no converge dentro de {maxIteraciones} iteraciones");
-            iteracionesP.Text = iteraciones.ToString();
+            
+           
             return xr; // Devuelve xr después de iteraciones
         }
         public double CalcularXr(string func, double xiCerrado, double xdCerrado, int metodo)
@@ -370,11 +372,12 @@ namespace Analisis_Numerico
                     MessageBox.Show("El método diverge. No se encuentra raíz.");
                     return double.NaN;
                 }
-
+                textBoxError.Text = error.ToString();
                 xr = xrNuevo;
             }
             MessageBox.Show($"El método no converge dentro de {maxIteraciones} iteraciones");
             iteracionesP.Text = iteraciones.ToString();
+            textBoxError.Text = error.ToString();
             return xr;
         }
 
@@ -408,12 +411,13 @@ namespace Analisis_Numerico
 
                 xi = xd;
                 xd = xr;
-
+                textBoxError.Text = error.ToString();
                 iteracionesP.Text = iteraciones.ToString();
             }
 
             MessageBox.Show($"El método no converge dentro de {maxIteraciones} iteraciones");
             iteracionesP.Text = iteraciones.ToString();
+            textBoxError.Text = error.ToString();
 
             return xr;
         }
@@ -470,6 +474,11 @@ namespace Analisis_Numerico
             MenuPrincipal menu = new MenuPrincipal();
             menu.Show();
             this.Hide();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

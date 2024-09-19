@@ -42,6 +42,7 @@
             Margin = new Padding(5, 4, 5, 4);
             Name = "MenuPrincipal";
             Text = "Form1";
+            Load += MenuPrincipal_Load;
             ResumeLayout(false);
         }
 

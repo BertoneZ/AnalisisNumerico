@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using Analisis_Numerico.Unidad_2;
 namespace Analisis_Numerico
 {
     public partial class MenuPrincipal : Form
@@ -111,7 +112,7 @@ namespace Analisis_Numerico
                 RowCount = 2,
                 AutoSize = true,
                 AutoSizeMode = AutoSizeMode.GrowAndShrink,
-                
+
             };
             this.Controls.Add(tableLayoutPanel);
 
@@ -132,7 +133,7 @@ namespace Analisis_Numerico
             };
             tableLayoutPanel.Controls.Add(titleLabel, 1, 1);
 
-          
+
 
             // Panel para botones
             FlowLayoutPanel buttonPanel = new FlowLayoutPanel
@@ -175,6 +176,13 @@ namespace Analisis_Numerico
                 FlatStyle = FlatStyle.Flat
             };
             btnEcuaciones.FlatAppearance.BorderSize = 0;
+            btnEcuaciones.Click += (sender, e) =>
+            {
+                SistemaDeEcuaciones SistemaDeEcuaciones = new SistemaDeEcuaciones();
+                SistemaDeEcuaciones.Show();
+                this.Hide();
+            };
+            buttonPanel.Controls.Add(btnCalculadora);
             buttonPanel.Controls.Add(btnEcuaciones);
 
             // Botón de Ajustes de Curvas
@@ -239,6 +247,11 @@ namespace Analisis_Numerico
         private void tituloBarra_MouseUp(object sender, MouseEventArgs e)
         {
             dragging = false;
+        }
+
+        private void MenuPrincipal_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
