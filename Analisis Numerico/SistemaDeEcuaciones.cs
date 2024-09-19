@@ -242,7 +242,8 @@ namespace Analisis_Numerico.Unidad_2
                 }
                 else if (selectedMethod == "Gauss-Seidel")
                 {
-                    solution = SolveGaussSeidel(matrix);
+                    //  solution =  SolveGaussSeidel(matrix, resultTextBoxes.Select(tb => double.Parse(tb.Text)).ToArray());
+                    solution = SolveGaussSeidel(matrix, resultTextBoxes.Select(tb => double.Parse(tb.Text)).ToArray(), int.Parse(textBoxIteraciones.Text), double.Parse(texboxTolerancia.Text));
                 }
 
                 if (solution != null)
@@ -261,151 +262,33 @@ namespace Analisis_Numerico.Unidad_2
             }
 
         }
-        private double[] SolveGaussSeidel(double[,] matrix)
+
+
+        
+        private double[] SolveGaussSeidel(double[,] matrix, double[] constants, int maxIterations, double tolerance)
         {
-            //int dimension = matrix.GetLength(0);  // Número de filas (variables)
-            //double[] x = new double[dimension];   // Vector inicial de soluciones
-            //double[] previousX = new double[dimension];  // Para comparar las soluciones previas
-            //int maxIterations = int.Parse(textBoxIteraciones.Text);
-            //double tolerance = double.Parse(texboxTolerancia.Text);
-            //double[] errorRelativo = new double[dimension];  // Vector para almacenar errores relativos
+            int dimension = matrix.GetLength(0);
+            double[] x = new double[dimension];
+            double[] previousX = new double[dimension];
+            double[] errorRelativo = new double[dimension];
 
-            //bool hasConverged = true;
-            //for (int iter = 0; iter < maxIterations; iter++)
-            //{
-            //    for (int i = 0; i < dimension; i++)
-            //    {
-            //        previousX[i] = x[i];  // Guardar el valor previo
-            //    }
-
-            //    for (int i = 0; i < dimension; i++)
-            //    {
-            //        if (matrix[i, i] == 0)
-            //        {
-            //            // Buscar fila con coeficiente no cero en la columna i
-            //            for (int k = i + 1; k < dimension; k++)
-            //            {
-            //                if (matrix[k, i] != 0)
-            //                {
-            //                    // Intercambiar filas i y k
-            //                    for (int j = 0; j <= dimension; j++)
-            //                    {
-            //                        double temp = matrix[i, j];
-            //                        matrix[i, j] = matrix[k, j];
-            //                        matrix[k, j] = temp;
-            //                    }
-            //                    break;
-            //                }
-            //            }
-            //        }
-            //    }
-
-            //    // Iterar sobre cada ecuación
-            //    for (int i = 0; i < dimension; i++)
-            //    {
-            //        double sum = matrix[i, dimension]; // Término independiente
-
-            //        // Resta de los coeficientes conocidos
-            //        for (int j = 0; j < dimension; j++)
-            //        {
-            //            if (i != j)
-            //            {
-            //                sum -= matrix[i, j] * x[j];
-            //            }
-            //        }
-
-            //        // Actualizar la variable
-            //        x[i] = sum / matrix[i, i];
-            //    }
-
-            //    // Comprobar si las soluciones convergen y calcular error relativo
-
-            //    for (int i = 0; i < dimension; i++)
-            //    {
-            //        // Calcular error relativo solo si x[i] no es 0 para evitar división por 0
-            //        if (x[i] != 0)
-            //        {
-            //            errorRelativo[i] = Math.Abs((x[i] - previousX[i]) / x[i]);
-            //        }
-            //        else
-            //        {
-            //            errorRelativo[i] = 0;
-            //        }
-
-            //        if (errorRelativo[i] > tolerance)  // Comparar error relativo con la tolerancia
-            //        {
-            //            hasConverged = false;
-            //        }
-            //    }
-
-            //    if (hasConverged)
-            //    {
-            //        break;
-            //    }
-            //}
-            //if (!hasConverged)
-            //{
-            //    MessageBox.Show("El sistema no ha convergido dentro del número máximo de iteraciones permitidas.", "Convergencia no alcanzada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
-
-            //return x;
-
-            //ESTE ES EL CODIGO QUE USE PARA EL TP (EL CODIGO QUE APARECE ABAJO, EL DE ARRIBA ES UN CODIGO DE SALVACION)
-            int dimension = matrix.GetLength(0);  // Número de filas (variables)
-            double[] x = new double[dimension];   // Vector inicial de soluciones
-            double[] previousX = new double[dimension];  // Para comparar las soluciones previas
-            int maxIterations = int.Parse(textBoxIteraciones.Text);
-            double tolerance = double.Parse(texboxTolerancia.Text);
-            double[] errorRelativo = new double[dimension];  // Vector para almacenar errores relativos
-
-            // Realizar pivotaje para evitar ceros en la diagonal principal
-            for (int i = 0; i < dimension; i++)
+            // Asegurarse de que la matriz sea diagonalmente dominante
+            if (!EnsureDiagonallyDominant(ref matrix, ref constants))
             {
-                if (matrix[i, i] == 0)
-                {
-                    bool swapped = false;
-
-                    // Buscar fila con coeficiente no cero en la columna i
-                    for (int k = i + 1; k < dimension; k++)
-                    {
-                        if (matrix[k, i] != 0)
-                        {
-                            // Intercambiar filas i y k
-                            for (int j = 0; j <= dimension; j++)
-                            {
-                                double temp = matrix[i, j];
-                                matrix[i, j] = matrix[k, j];
-                                matrix[k, j] = temp;
-                            }
-                            swapped = true;
-                            break;
-                        }
-                    }
-
-                    // Si no se pudo intercambiar, mostrar mensaje de error y terminar
-                    if (!swapped)
-                    {
-                        MessageBox.Show($"No se pudo hacer pivotaje en la fila {i + 1}. La matriz es singular o mal definida.", "Error de Pivotaje", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return null;
-                    }
-                }
+                MessageBox.Show("No se pudo convertir la matriz en diagonalmente dominante.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
 
             bool hasConverged = false;
+
             for (int iter = 0; iter < maxIterations; iter++)
             {
-                // Guardar el valor previo para el cálculo del error
+                Array.Copy(x, previousX, dimension);
+
                 for (int i = 0; i < dimension; i++)
                 {
-                    previousX[i] = x[i];
-                }
+                    double sum = constants[i]; // Término independiente
 
-                // Iterar sobre cada ecuación
-                for (int i = 0; i < dimension; i++)
-                {
-                    double sum = matrix[i, dimension]; // Término independiente
-
-                    // Resta de los coeficientes conocidos
                     for (int j = 0; j < dimension; j++)
                     {
                         if (i != j)
@@ -414,49 +297,42 @@ namespace Analisis_Numerico.Unidad_2
                         }
                     }
 
-                    // Verificar si el coeficiente en la diagonal es cero después del pivotaje
                     if (matrix[i, i] == 0)
                     {
-                        MessageBox.Show($"Coeficiente cero en la diagonal en la fila {i + 1} después del pivotaje. No se puede resolver el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Coeficiente cero en la diagonal en la fila {i + 1}. No se puede resolver el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return null;
                     }
 
-                    // Actualizar la variable con el valor más reciente
                     x[i] = sum / matrix[i, i];
                 }
 
-                // Comprobar si las soluciones convergen y calcular error relativo
                 hasConverged = true;
                 for (int i = 0; i < dimension; i++)
                 {
-                    // Calcular error relativo
                     double absDifference = Math.Abs(x[i] - previousX[i]);
                     double absCurrent = Math.Abs(x[i]);
 
-                    if (absCurrent > 1e-10)  // Para evitar problemas con números muy pequeños
+                    if (absCurrent > 1e-10)
                     {
                         errorRelativo[i] = absDifference / absCurrent;
                     }
                     else
                     {
-                        errorRelativo[i] = absDifference;  // Evitar división por cero
+                        errorRelativo[i] = absDifference;
                     }
 
-                    // Comprobar si el error relativo está dentro de la tolerancia
                     if (errorRelativo[i] > tolerance)
                     {
                         hasConverged = false;
                     }
                 }
 
-                // Si se cumple la condición de tolerancia, se considera que ha convergido
                 if (hasConverged)
                 {
                     break;
                 }
             }
 
-            // Si no ha convergido después del número máximo de iteraciones, mostrar un mensaje de advertencia
             if (!hasConverged)
             {
                 MessageBox.Show("El sistema no ha convergido dentro del número máximo de iteraciones permitidas.", "Convergencia no alcanzada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -464,6 +340,99 @@ namespace Analisis_Numerico.Unidad_2
 
             return x;
         }
+
+        private bool EnsureDiagonallyDominant(ref double[,] matrix, ref double[] constants)
+        {
+            int dimension = matrix.GetLength(0);
+            bool isDiagonallyDominant = false;
+
+            // Repetir hasta que la matriz sea diagonalmente dominante o hasta que se intente una cantidad razonable de veces
+            for (int attempts = 0; attempts < dimension; attempts++)
+            {
+                isDiagonallyDominant = IsDiagonallyDominant(matrix);
+                if (isDiagonallyDominant)
+                {
+                    return true;
+                }
+
+                // Intentar hacer la matriz diagonalmente dominante mediante intercambio de filas
+                for (int i = 0; i < dimension; i++)
+                {
+                    if (matrix[i, i] == 0 || !IsDiagonallyDominant(matrix))
+                    {
+                        bool swapped = false;
+                        for (int k = i + 1; k < dimension; k++)
+                        {
+                            if (matrix[k, i] != 0)
+                            {
+                                SwapRows(ref matrix, ref constants, i, k);
+                                swapped = true;
+                                break;
+                            }
+                        }
+
+                        if (!swapped)
+                        {
+                            // No se pudo encontrar una fila adecuada para intercambiar
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return isDiagonallyDominant;
+        }
+
+        private bool IsDiagonallyDominant(double[,] matrix)
+        {
+            int dimension = matrix.GetLength(0);
+            for (int i = 0; i < dimension; i++)
+            {
+                double diagonalElement = Math.Abs(matrix[i, i]);
+                double rowSum = 0;
+                for (int j = 0; j < dimension; j++)
+                {
+                    if (i != j)
+                    {
+                        rowSum += Math.Abs(matrix[i, j]);
+                    }
+                }
+                if (diagonalElement <= rowSum)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void SwapRows(ref double[,] matrix, ref double[] constants, int row1, int row2)
+        {
+            int dimension = matrix.GetLength(0);
+
+            // Intercambiar filas en la matriz
+            for (int j = 0; j < dimension; j++)
+            {
+                double temp = matrix[row1, j];
+                matrix[row1, j] = matrix[row2, j];
+                matrix[row2, j] = temp;
+            }
+
+            // Intercambiar términos independientes
+            double tempConst = constants[row1];
+            constants[row1] = constants[row2];
+            constants[row2] = tempConst;
+        }
+
+
+
+
+
+
+
+
+
+
+
 
         private void BotonSalir_Click(object sender, EventArgs e)
         {
