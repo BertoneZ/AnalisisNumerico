@@ -196,16 +196,17 @@
             // 
             // raiz
             // 
-            raiz.Location = new Point(245, 712);
+            raiz.Location = new Point(245, 757);
             raiz.Margin = new Padding(4, 2, 4, 2);
             raiz.Name = "raiz";
+            raiz.ReadOnly = true;
             raiz.Size = new Size(164, 35);
             raiz.TabIndex = 17;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(245, 674);
+            label7.Location = new Point(245, 728);
             label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
             label7.Size = new Size(89, 27);
@@ -239,18 +240,19 @@
             iteracionesP.Location = new Point(52, 712);
             iteracionesP.Margin = new Padding(4, 2, 4, 2);
             iteracionesP.Name = "iteracionesP";
+            iteracionesP.ReadOnly = true;
             iteracionesP.Size = new Size(128, 35);
             iteracionesP.TabIndex = 23;
             // 
             // maxIteracionesLabel
             // 
             maxIteracionesLabel.AutoSize = true;
-            maxIteracionesLabel.Location = new Point(52, 674);
+            maxIteracionesLabel.Location = new Point(52, 683);
             maxIteracionesLabel.Margin = new Padding(4, 0, 4, 0);
             maxIteracionesLabel.Name = "maxIteracionesLabel";
-            maxIteracionesLabel.Size = new Size(128, 27);
+            maxIteracionesLabel.Size = new Size(177, 27);
             maxIteracionesLabel.TabIndex = 24;
-            maxIteracionesLabel.Text = "Iteraciones";
+            maxIteracionesLabel.Text = "Iter. Realizadas";
             // 
             // X
             // 
@@ -308,16 +310,17 @@
             // 
             // textBoxError
             // 
-            textBoxError.Location = new Point(245, 783);
+            textBoxError.Location = new Point(245, 845);
             textBoxError.Margin = new Padding(4, 2, 4, 2);
             textBoxError.Name = "textBoxError";
+            textBoxError.ReadOnly = true;
             textBoxError.Size = new Size(164, 35);
             textBoxError.TabIndex = 31;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(245, 754);
+            label1.Location = new Point(245, 816);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(65, 27);
