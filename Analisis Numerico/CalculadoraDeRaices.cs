@@ -274,11 +274,68 @@ namespace Analisis_Numerico
             }
             raiz.Text = resultado.ToString();
         }
+        //public double MetodosCerrados(string func, double xiCerrado, double xdCerrado, int maxIteraciones, double tole)
+        //{
+        //    double fxi = analizadorFunciones.EvaluaFx(xiCerrado);
+        //    double fxd = analizadorFunciones.EvaluaFx(xdCerrado);
+        //    int iteraciones = 0;
+        //    if (fxi * fxd > 0)
+        //    {
+        //        MessageBox.Show("Vuelva a ingresar xi y xd. No hay raíz en el intervalo.");
+        //        return double.NaN;
+        //    }
+
+        //    if (fxi == 0)
+        //    {
+        //        return xiCerrado; // xiCerrado es raíz
+        //    }
+
+        //    if (fxd == 0)
+        //    {
+        //        return xdCerrado; // xdCerrado es raíz
+        //    }
+
+        //    double xrAnterior = 0;
+        //    double xr = 0;
+        //    double error = double.MaxValue;
+
+        //    for (int i = 0; i < maxIteraciones; i++)
+        //    {
+        //        iteraciones = i;
+        //        xr = CalcularXr(func, xiCerrado, xdCerrado, metodos.SelectedIndex);
+        //        error = Math.Abs((xr - xrAnterior) / xr);
+
+        //        if (Math.Abs(analizadorFunciones.EvaluaFx(xr)) < tole || error < tole)
+        //        {
+        //            iteracionesP.Text = iteraciones.ToString();
+        //            return xr; // xr es raíz
+        //        }
+
+        //        if (fxi * analizadorFunciones.EvaluaFx(xr) > 0)
+        //        {
+        //            xiCerrado = xr;
+        //        }
+        //        else
+        //        {
+        //            xdCerrado = xr;
+        //        }
+        //        iteracionesP.Text = iteraciones.ToString();
+        //        xrAnterior = xr;
+        //        textBoxError.Text = error.ToString();
+        //    }
+        //    MessageBox.Show($"El método no converge dentro de {maxIteraciones} iteraciones");
+
+
+        //    return xr; // Devuelve xr después de iteraciones
+        //}
+
         public double MetodosCerrados(string func, double xiCerrado, double xdCerrado, int maxIteraciones, double tole)
         {
             double fxi = analizadorFunciones.EvaluaFx(xiCerrado);
             double fxd = analizadorFunciones.EvaluaFx(xdCerrado);
             int iteraciones = 0;
+
+            // Verificar si hay raíz en el intervalo inicial
             if (fxi * fxd > 0)
             {
                 MessageBox.Show("Vuelva a ingresar xi y xd. No hay raíz en el intervalo.");
@@ -305,10 +362,18 @@ namespace Analisis_Numerico
                 xr = CalcularXr(func, xiCerrado, xdCerrado, metodos.SelectedIndex);
                 error = Math.Abs((xr - xrAnterior) / xr);
 
+                // Verificar si el error es suficientemente pequeño
                 if (Math.Abs(analizadorFunciones.EvaluaFx(xr)) < tole || error < tole)
                 {
                     iteracionesP.Text = iteraciones.ToString();
                     return xr; // xr es raíz
+                }
+
+                // Verificar si hay un comportamiento brusco cerca de la raíz
+                if (Math.Abs(xr - xrAnterior) < 1e-10) // Umbral para detectar cambios muy pequeños
+                {
+                    MessageBox.Show("La función presenta un comportamiento casi constante o un brusco empinamiento cerca de la raíz. No se puede determinar la raíz con precisión.");
+                    return double.NaN;
                 }
 
                 if (fxi * analizadorFunciones.EvaluaFx(xr) > 0)
@@ -319,15 +384,19 @@ namespace Analisis_Numerico
                 {
                     xdCerrado = xr;
                 }
+
                 iteracionesP.Text = iteraciones.ToString();
                 xrAnterior = xr;
                 textBoxError.Text = error.ToString();
             }
-            MessageBox.Show($"El método no converge dentro de {maxIteraciones} iteraciones");
-            
-           
-            return xr; // Devuelve xr después de iteraciones
+
+            // Si se supera el número máximo de iteraciones
+            MessageBox.Show($"El método no converge dentro de {maxIteraciones} iteraciones.");
+            return double.NaN; // Devuelve NaN para indicar no convergencia
         }
+
+
+
         public double CalcularXr(string func, double xiCerrado, double xdCerrado, int metodo)
         {
             double xr = 0;
@@ -379,7 +448,7 @@ namespace Analisis_Numerico
             iteracionesP.Text = iteraciones.ToString();
             textBoxError.Text = error.ToString();
             return xr;
-        }
+        } 
 
         public double MetodoSecante(string func, double xi, double xd, int maxIteraciones, double tole)
         {

@@ -264,16 +264,21 @@ namespace Analisis_Numerico.Unidad_2
         }
 
 
-        
+
         private double[] SolveGaussSeidel(double[,] matrix, double[] constants, int maxIterations, double tolerance)
         {
             int dimension = matrix.GetLength(0);
             double[] x = new double[dimension];
             double[] previousX = new double[dimension];
             double[] errorRelativo = new double[dimension];
+            List<int> filaOrden = new List<int>();
+            for (int i = 0; i < dimension; i++)
+            {
+                filaOrden.Add(i + 1); // Inicialmente, las filas están en el orden 1, 2, ..., n
+            }
 
             // Asegurarse de que la matriz sea diagonalmente dominante
-            if (!EnsureDiagonallyDominant(ref matrix, ref constants))
+            if (!EnsureDiagonallyDominant(ref matrix, ref constants, filaOrden))
             {
                 MessageBox.Show("No se pudo convertir la matriz en diagonalmente dominante.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
@@ -337,11 +342,17 @@ namespace Analisis_Numerico.Unidad_2
             {
                 MessageBox.Show("El sistema no ha convergido dentro del número máximo de iteraciones permitidas.", "Convergencia no alcanzada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            else
+            {
+                // Mostrar el nuevo orden de las filas
+                string nuevoOrden = string.Join(", ", filaOrden);
+                MessageBox.Show($"Nuevo orden de las filas: {nuevoOrden}", "Orden de filas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
             return x;
         }
 
-        private bool EnsureDiagonallyDominant(ref double[,] matrix, ref double[] constants)
+        private bool EnsureDiagonallyDominant(ref double[,] matrix, ref double[] constants, List<int> filaOrden)
         {
             int dimension = matrix.GetLength(0);
             bool isDiagonallyDominant = false;
@@ -366,6 +377,10 @@ namespace Analisis_Numerico.Unidad_2
                             if (matrix[k, i] != 0)
                             {
                                 SwapRows(ref matrix, ref constants, i, k);
+                                int temp = filaOrden[i];
+                                filaOrden[i] = filaOrden[k];
+                                filaOrden[k] = temp;
+
                                 swapped = true;
                                 break;
                             }
@@ -421,183 +436,174 @@ namespace Analisis_Numerico.Unidad_2
             double tempConst = constants[row1];
             constants[row1] = constants[row2];
             constants[row2] = tempConst;
+
         }
+    
 
+    private void BotonSalir_Click(object sender, EventArgs e)
+    {
+        MenuPrincipal menu = new MenuPrincipal();
+        menu.Show();
+        this.Hide();
+    }
 
+    private void tituloBarra_MouseDown(object sender, MouseEventArgs e)
+    {
+        dragging = true;
+        dragCursorPoint = Cursor.Position;
+        dragFormPoint = this.Location;
+    }
 
+    private void tituloBarra_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (dragging)
+        {
+            Point diff = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
+            this.Location = Point.Add(dragFormPoint, new Size(diff));
+        }
+    }
 
+    private void tituloBarra_MouseUp(object sender, MouseEventArgs e)
+    {
+        dragging = false;
+    }
+    public void AplicarEstilo()
+    {
+        this.BackColor = fondo;
 
+        MaximizeBox = true;
+        AutoSize = true;
+        AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        this.CenterToScreen();
 
+        this.BackColor = borde;
+        Panel tituloBarra = new Panel();
+        tituloBarra.Dock = DockStyle.Top;
+        tituloBarra.Height = 50;
+        tituloBarra.BackColor = fondo;
 
+        Label tituloEtiqueta = new Label();
+        tituloEtiqueta.Text = "Sistema de Ecuaciones - Análisis Numérico";
+        tituloEtiqueta.ForeColor = textoBoton;
+        tituloEtiqueta.Dock = DockStyle.Left;
+        tituloEtiqueta.TextAlign = ContentAlignment.MiddleLeft;
+        tituloEtiqueta.AutoSize = true;
 
+        Button botonCerrar = new Button();
+        botonCerrar.Text = "X";
+        botonCerrar.Dock = DockStyle.Right;
+        botonCerrar.Width = 50;
+        botonCerrar.ForeColor = textoBoton;
+        botonCerrar.BackColor = Color.FromArgb(231, 76, 60);
+        botonCerrar.FlatStyle = FlatStyle.Flat;
+        botonCerrar.FlatAppearance.BorderSize = 0;
 
-
-
-
-        private void BotonSalir_Click(object sender, EventArgs e)
+        botonCerrar.Click += new EventHandler((sender, e) =>
         {
             MenuPrincipal menu = new MenuPrincipal();
             menu.Show();
             this.Hide();
-        }
+        });
 
-        private void tituloBarra_MouseDown(object sender, MouseEventArgs e)
+        tituloBarra.Controls.Add(tituloEtiqueta);
+        tituloBarra.Controls.Add(botonCerrar);
+
+
+        Button botonMaximizar = new Button();
+        botonMaximizar.Text = "□";
+        botonMaximizar.Dock = DockStyle.Right;
+        botonMaximizar.Width = 50;
+        botonMaximizar.ForeColor = textoBoton;
+        botonMaximizar.BackColor = fondo;
+        botonMaximizar.FlatStyle = FlatStyle.Flat;
+        botonMaximizar.FlatAppearance.BorderSize = 0;
+
+        botonMaximizar.Click += (s, e) =>
         {
-            dragging = true;
-            dragCursorPoint = Cursor.Position;
-            dragFormPoint = this.Location;
-        }
-
-        private void tituloBarra_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (dragging)
-            {
-                Point diff = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
-                this.Location = Point.Add(dragFormPoint, new Size(diff));
-            }
-        }
-
-        private void tituloBarra_MouseUp(object sender, MouseEventArgs e)
-        {
-            dragging = false;
-        }
-        public void AplicarEstilo()
-        {
-            this.BackColor = fondo;
-
-            MaximizeBox = true;
-            AutoSize = true;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            this.CenterToScreen();
-
-            this.BackColor = borde;
-            Panel tituloBarra = new Panel();
-            tituloBarra.Dock = DockStyle.Top;
-            tituloBarra.Height = 50;
-            tituloBarra.BackColor = fondo;
-
-            Label tituloEtiqueta = new Label();
-            tituloEtiqueta.Text = "Sistema de Ecuaciones - Análisis Numérico";
-            tituloEtiqueta.ForeColor = textoBoton;
-            tituloEtiqueta.Dock = DockStyle.Left;
-            tituloEtiqueta.TextAlign = ContentAlignment.MiddleLeft;
-            tituloEtiqueta.AutoSize = true;
-
-            Button botonCerrar = new Button();
-            botonCerrar.Text = "X";
-            botonCerrar.Dock = DockStyle.Right;
-            botonCerrar.Width = 50;
-            botonCerrar.ForeColor = textoBoton;
-            botonCerrar.BackColor = Color.FromArgb(231, 76, 60);
-            botonCerrar.FlatStyle = FlatStyle.Flat;
-            botonCerrar.FlatAppearance.BorderSize = 0;
-
-            botonCerrar.Click += new EventHandler((sender, e) =>
-            {
-                MenuPrincipal menu = new MenuPrincipal();
-                menu.Show();
-                this.Hide();
-            });
-
-            tituloBarra.Controls.Add(tituloEtiqueta);
-            tituloBarra.Controls.Add(botonCerrar);
+            this.WindowState = this.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
+        };
+        Button botonMinimizar = new Button();
+        botonMinimizar.Text = "-";
+        botonMinimizar.Dock = DockStyle.Right;
+        botonMinimizar.Width = 50;
+        botonMinimizar.ForeColor = textoBoton; //esto 
+        botonMinimizar.BackColor = fondo;
+        botonMinimizar.FlatStyle = FlatStyle.Flat;
+        botonMinimizar.FlatAppearance.BorderSize = 0;
+        botonMinimizar.Click += (s, e) => this.WindowState = FormWindowState.Minimized;
 
 
-            Button botonMaximizar = new Button();
-            botonMaximizar.Text = "□";
-            botonMaximizar.Dock = DockStyle.Right;
-            botonMaximizar.Width = 50;
-            botonMaximizar.ForeColor = textoBoton;
-            botonMaximizar.BackColor = fondo;
-            botonMaximizar.FlatStyle = FlatStyle.Flat;
-            botonMaximizar.FlatAppearance.BorderSize = 0;
+        tituloBarra.Controls.Add(tituloEtiqueta);
+        tituloBarra.Controls.Add(botonMinimizar);
+        tituloBarra.Controls.Add(botonMaximizar);
+        tituloBarra.Controls.Add(botonCerrar);
 
-            botonMaximizar.Click += (s, e) =>
-            {
-                this.WindowState = this.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
-            };
-            Button botonMinimizar = new Button();
-            botonMinimizar.Text = "-";
-            botonMinimizar.Dock = DockStyle.Right;
-            botonMinimizar.Width = 50;
-            botonMinimizar.ForeColor = textoBoton; //esto 
-            botonMinimizar.BackColor = fondo;
-            botonMinimizar.FlatStyle = FlatStyle.Flat;
-            botonMinimizar.FlatAppearance.BorderSize = 0;
-            botonMinimizar.Click += (s, e) => this.WindowState = FormWindowState.Minimized;
+        this.Controls.Add(tituloBarra);
+        tituloBarra.MouseDown += tituloBarra_MouseDown;
+        tituloBarra.MouseMove += tituloBarra_MouseMove;
+        tituloBarra.MouseUp += tituloBarra_MouseUp;
 
+        botonCalcular.BackColor = boton;
+        botonCalcular.ForeColor = textoBoton;
+        botonCalcular.FlatStyle = FlatStyle.Flat;
+        botonCalcular.Size = new Size(120, 50);
+        botonCalcular.FlatAppearance.BorderSize = 0;
+        botonCalcular.MouseEnter += (s, e) => botonCalcular.BackColor = Color.FromArgb(204, 60, 49); // Efecto hover
+        botonCalcular.MouseLeave += (s, e) => botonCalcular.BackColor = boton;
 
-            tituloBarra.Controls.Add(tituloEtiqueta);
-            tituloBarra.Controls.Add(botonMinimizar);
-            tituloBarra.Controls.Add(botonMaximizar);
-            tituloBarra.Controls.Add(botonCerrar);
+        BotonSalir.BackColor = boton;
+        BotonSalir.ForeColor = textoBoton;
+        BotonSalir.FlatStyle = FlatStyle.Flat;
+        BotonSalir.Size = new Size(120, 50);
+        BotonSalir.FlatAppearance.BorderSize = 0;
+        BotonSalir.MouseEnter += (s, e) => BotonSalir.BackColor = Color.FromArgb(204, 60, 49); // Efecto hover
+        BotonSalir.MouseLeave += (s, e) => BotonSalir.BackColor = boton;
 
-            this.Controls.Add(tituloBarra);
-            tituloBarra.MouseDown += tituloBarra_MouseDown;
-            tituloBarra.MouseMove += tituloBarra_MouseMove;
-            tituloBarra.MouseUp += tituloBarra_MouseUp;
-
-            botonCalcular.BackColor = boton;
-            botonCalcular.ForeColor = textoBoton;
-            botonCalcular.FlatStyle = FlatStyle.Flat;
-            botonCalcular.Size = new Size(120, 50);
-            botonCalcular.FlatAppearance.BorderSize = 0;
-            botonCalcular.MouseEnter += (s, e) => botonCalcular.BackColor = Color.FromArgb(204, 60, 49); // Efecto hover
-            botonCalcular.MouseLeave += (s, e) => botonCalcular.BackColor = boton;
-
-            BotonSalir.BackColor = boton;
-            BotonSalir.ForeColor = textoBoton;
-            BotonSalir.FlatStyle = FlatStyle.Flat;
-            BotonSalir.Size = new Size(120, 50);
-            BotonSalir.FlatAppearance.BorderSize = 0;
-            BotonSalir.MouseEnter += (s, e) => BotonSalir.BackColor = Color.FromArgb(204, 60, 49); // Efecto hover
-            BotonSalir.MouseLeave += (s, e) => BotonSalir.BackColor = boton;
-
-            botonGenerar.BackColor = boton;
-            botonGenerar.ForeColor = textoBoton;
-            botonGenerar.FlatStyle = FlatStyle.Flat;
-            botonGenerar.Size = new Size(150, 50);
-            botonGenerar.FlatAppearance.BorderSize = 0;
-            botonGenerar.MouseEnter += (s, e) => botonGenerar.BackColor = Color.FromArgb(204, 60, 49); // Efecto hover
-            botonGenerar.MouseLeave += (s, e) => botonGenerar.BackColor = boton;
-
-        }
-
-        private void comboBoxMethod_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            OcultarCampos();
-
-            if (comboBoxMethod.SelectedIndex == 1)
-            {
-                ToleranciaLabel.Visible = true;
-                texboxTolerancia.Visible = true;
-                IteracionesLabel.Visible = true;
-                textBoxIteraciones.Visible = true;
-
-
-                texboxTolerancia.Enabled = true;
-
-                textBoxIteraciones.Enabled = true;
-            }
-            else
-            {
-                ToleranciaLabel.Visible = false;
-                texboxTolerancia.Visible = false;
-                IteracionesLabel.Visible = false;
-                textBoxIteraciones.Visible = false;
-
-
-                texboxTolerancia.Enabled = false;
-
-                textBoxIteraciones.Enabled = false;
-            }
-
-
-
-
-
-        }
+        botonGenerar.BackColor = boton;
+        botonGenerar.ForeColor = textoBoton;
+        botonGenerar.FlatStyle = FlatStyle.Flat;
+        botonGenerar.Size = new Size(150, 50);
+        botonGenerar.FlatAppearance.BorderSize = 0;
+        botonGenerar.MouseEnter += (s, e) => botonGenerar.BackColor = Color.FromArgb(204, 60, 49); // Efecto hover
+        botonGenerar.MouseLeave += (s, e) => botonGenerar.BackColor = boton;
 
     }
+
+    private void comboBoxMethod_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        OcultarCampos();
+
+        if (comboBoxMethod.SelectedIndex == 1)
+        {
+            ToleranciaLabel.Visible = true;
+            texboxTolerancia.Visible = true;
+            IteracionesLabel.Visible = true;
+            textBoxIteraciones.Visible = true;
+
+
+            texboxTolerancia.Enabled = true;
+
+            textBoxIteraciones.Enabled = true;
+        }
+        else
+        {
+            ToleranciaLabel.Visible = false;
+            texboxTolerancia.Visible = false;
+            IteracionesLabel.Visible = false;
+            textBoxIteraciones.Visible = false;
+
+
+            texboxTolerancia.Enabled = false;
+
+            textBoxIteraciones.Enabled = false;
+        }
+
+
+
+
+
+    }
+
+}
 }
 
