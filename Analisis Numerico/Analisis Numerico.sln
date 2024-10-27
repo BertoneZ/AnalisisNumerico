@@ -5,6 +5,11 @@ VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Analisis Numerico", "Analisis Numerico.csproj", "{2B10D3DC-E807-4137-BAB2-213BDC66FF85}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{AC14B693-DF4F-41FA-B5AB-06D65EC4DB31}"
+	ProjectSection(SolutionItems) = preProject
+		Unidad 3\Graficador\Graficador.cs = Unidad 3\Graficador\Graficador.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

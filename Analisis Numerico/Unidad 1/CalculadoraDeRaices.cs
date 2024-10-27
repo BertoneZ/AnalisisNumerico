@@ -448,7 +448,8 @@ namespace Analisis_Numerico
             iteracionesP.Text = iteraciones.ToString();
             textBoxError.Text = error.ToString();
             return xr;
-        } 
+        }
+
 
         public double MetodoSecante(string func, double xi, double xd, int maxIteraciones, double tole)
         {
@@ -546,6 +547,11 @@ namespace Analisis_Numerico
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BotonCalcular_Click(object sender, EventArgs e)
         {
 
         }

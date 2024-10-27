@@ -71,6 +71,7 @@
             BotonCalcular.TabIndex = 0;
             BotonCalcular.Text = "Calcular";
             BotonCalcular.UseVisualStyleBackColor = true;
+            BotonCalcular.Click += BotonCalcular_Click;
             // 
             // metodos
             // 

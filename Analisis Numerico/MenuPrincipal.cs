@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using Analisis_Numerico.Unidad_2;
+using Analisis_Numerico.Unidad_4;
 namespace Analisis_Numerico
 {
     public partial class MenuPrincipal : Form
@@ -196,6 +197,12 @@ namespace Analisis_Numerico
                 FlatStyle = FlatStyle.Flat
             };
             btnCurvas.FlatAppearance.BorderSize = 0;
+            btnCurvas.Click += (sender, e) =>
+            {
+                AjustesCurvas ajusteDeCurvas = new AjustesCurvas();
+                ajusteDeCurvas.Show();
+                this.Hide();
+            };
             buttonPanel.Controls.Add(btnCurvas);
 
             // Botón de Integración Numérica
@@ -209,6 +216,12 @@ namespace Analisis_Numerico
                 FlatStyle = FlatStyle.Flat
             };
             btnIntegracion.FlatAppearance.BorderSize = 0;
+            btnIntegracion.Click += (sender, e) =>
+            {
+                IntegracionNumerica integracionNumerica = new IntegracionNumerica();
+                integracionNumerica.Show();
+                this.Hide();
+            };
             buttonPanel.Controls.Add(btnIntegracion);
 
             // Botón de Salir

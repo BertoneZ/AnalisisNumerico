@@ -153,6 +153,7 @@
             // 
             // botonGenerar
             // 
+            botonGenerar.ForeColor = SystemColors.HotTrack;
             botonGenerar.Location = new Point(291, 43);
             botonGenerar.Name = "botonGenerar";
             botonGenerar.Size = new Size(143, 34);
