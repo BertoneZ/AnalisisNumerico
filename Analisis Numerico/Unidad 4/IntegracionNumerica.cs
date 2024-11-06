@@ -12,6 +12,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.Web.WebView2.WinForms;
 using Microsoft.Web.WebView2.Wpf;
 using System.IO;
+using System.Text.RegularExpressions;
 
 
 
@@ -24,6 +25,10 @@ namespace Analisis_Numerico.Unidad_4
         {
             InitializeComponent();
             Form1_Load();
+            OcultarCampos();
+            // Llamada a la función que oculta los campos de la segunda función
+            comboOperacion.SelectedItem = "No";
+            comboOperacion.SelectedIndexChanged += new EventHandler(comboOperacion_SelectedItem);
 
         }
 
@@ -52,9 +57,10 @@ namespace Analisis_Numerico.Unidad_4
                 n = int.Parse(textBoxINT.Text);
             }
 
-            if (!string.IsNullOrEmpty(funcion2) && comboOperacion.SelectedItem.ToString() == "Área entre funciones")
+            if (!string.IsNullOrEmpty(funcion2) && comboOperacion.SelectedItem.ToString() == "Si")
             {
                 // Calcula la función diferencia entre las dos funciones
+
                 string funcionDiferencia = $"({funcion1}) - ({funcion2})";
 
                 // Utilizar la función diferencia para calcular el área
@@ -114,46 +120,6 @@ namespace Analisis_Numerico.Unidad_4
                         return;
                 }
             }
-
-
-            //switch (comboBox.SelectedIndex)
-            //{
-            //    case 0:
-            //        // Calcular la integral con el método del trapecio simple
-            //        resultado = CalcularIntegralTrapecioSimple(funcion, xi, xd);
-
-
-            //        break;
-            //    case 1:
-
-            //        // Calcular la integral con el método del trapecio múltiple
-            //        resultado = CalcularIntegralTrapeciosMultiple(funcion, xi, xd, n);
-
-            //        break;
-            //    case 2:
-            //        // Calcular la integral con el método de Simpson 1/3 simple
-            //        resultado = CalcularIntegralSimpson1_3Simple(funcion, xi, xd);
-
-            //        break;
-            //    case 3:
-
-            //        // Calcular la integral con el método de Simpson 1/3 múltiple
-            //        resultado = CalcularIntegralSimpson1_3Multiple(funcion, xi, xd, n);
-            //        break;
-            //    case 4:
-            //        // Calcular la integral con el método de Simpson 3/8 simple
-            //        resultado = CalcularIntegralSimpson3_8Simple(funcion, xi, xd);
-            //        break;
-            //    case 5:
-            //        // Calcular la integral con el método de Simpson 3/8 múltiple
-            //        resultado = CalcularIntegralSimpson3_8Multiple(funcion, xi, xd, n);
-            //        break;
-            //    default:
-            //        // Manejo de un caso por defecto si es necesario
-            //        MessageBox.Show("Por favor, seleccione un método de integración válido.");
-            //        return; // Salimos si no hay una selección válida
-            //}
-
             // Asignar el resultado al TextBox con 4 decimales
             textBoxAREA.Text = resultado.ToString("0.00000");
 
@@ -169,10 +135,15 @@ namespace Analisis_Numerico.Unidad_4
             // Crear una instancia de la clase que evalúa la función
             Calculo Function = new Calculo();
 
+
+
+
             if (funcion.Contains("ln"))
             {
                 funcion = funcion.Replace("ln", "log");
             }
+
+
 
 
             // Verificar si la función es válida y tiene 'x' como variable
@@ -192,7 +163,10 @@ namespace Analisis_Numerico.Unidad_4
             }
 
 
+
         }
+
+
 
         //trapecios multiples
         public double CalcularIntegralTrapeciosMultiple(string funcion, double xi, double xd, int n)
@@ -409,12 +383,18 @@ namespace Analisis_Numerico.Unidad_4
             string funcion2 = textBoxFUNCION2.Text.Replace(",", "."); // Segunda función
 
             // Dibujar la primera función f(x) en GeoGebra
+            string colorFuncion = "azul";
             await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('f(x) = {funcion1}')");
+            await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('SetColor(f, {colorFuncion})')");
+
+
 
             if (!string.IsNullOrEmpty(funcion2))
             {
                 // Si hay una segunda función, la dibujamos
+                string colorFuncion2 = "naranja";
                 await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('g(x) = {funcion2}')");
+                await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('SetColor(g, {colorFuncion2})')");
 
                 // Pintar el área entre las funciones f(x) y g(x)
                 for (int i = 0; i < n; i++)
@@ -423,8 +403,12 @@ namespace Analisis_Numerico.Unidad_4
                     double x1 = xi + (i + 1) * (xd - xi) / n;
 
                     // La integral entre las dos funciones f(x) y g(x)
-                    await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('AreaEntre{i} = IntegralBetween(f, g, {x0.ToString().Replace(",", ".")}, {x1.ToString().Replace(",", ".")})')");
-                    await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('ShowLabel(AreaEntre{i}, false)')");
+                    string color = (i % 2 == 0) ? "rojo" : "naranja";
+                    await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('Area{i + 1} = IntegralBetween(f, g, {x0.ToString().Replace(",", ".")}, {x1.ToString().Replace(",", ".")})')");
+                    await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('ShowLabel(Area{i + 1}, false)')");
+                    await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('SetColor(Area{i + 1}, {color})')");
+
+
                     await Task.Delay(100);
                 }
             }
@@ -435,17 +419,11 @@ namespace Analisis_Numerico.Unidad_4
                 {
                     double x0 = xi + i * (xd - xi) / n;
                     double x1 = xi + (i + 1) * (xd - xi) / n;
+                    string color = (i % 2 == 0) ? "rojo" : "naranja";
 
-                    string color = (i % 2 == 0) ? "red" : "blue";
-                    // await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('Area{i} = IntegralBetween(f, {x0.ToString().Replace(",", ".")}, {x1.ToString().Replace(",", ".")})')");
-                    //hacer que el area se pinte solo bajo la curva de la funcion sin pintar el area entre el eje x y la funcion
-                    await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('Area{i} = IntegralBetween(f, {x0.ToString().Replace(",", ".")}, {x1.ToString().Replace(",", ".")})')");
-
-
-
-
-                    await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('SetColor(Area{i}, {color})')");
-                    await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('ShowLabel(Area{i}, false)')");
+                    await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('Area{i + 1} = Integral(f, {x0.ToString().Replace(",", ".")}, {x1.ToString().Replace(",", ".")})')");
+                    await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('SetColor(Area{i + 1}, {color} )')");
+                    await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('ShowLabel(Area{i + 1},false)')");
                     await Task.Delay(100);
                 }
             }
@@ -453,21 +431,39 @@ namespace Analisis_Numerico.Unidad_4
 
         }
 
-        private void BotonSalir_Click_1(object sender, EventArgs e)
+     
+        private void OcultarCampos()
+        {
+            textBoxFUNCION2.Visible = false;
+            textBoxFUNCION2.Enabled = false;
+            labelFuncion2.Visible = false;
+        }
+
+        //Hacer que si el comboOperacion es "Si" se habilite el textBoxFuncion2, sino se deshabilite
+        private void comboOperacion_SelectedItem(object sender, EventArgs e)
+        {
+            OcultarCampos();
+            if (comboOperacion.SelectedItem.ToString() == "Si")
+            {
+
+                textBoxFUNCION2.Enabled = true;
+                textBoxFUNCION2.Visible = true;
+                labelFuncion2.Visible = true;
+            }
+            else
+            {
+                textBoxFUNCION2.Enabled = false;
+                textBoxFUNCION2.Visible = false;
+                labelFuncion2.Visible = false;
+            }
+        }
+
+
+        private void BotonSalir_Click(object sender, EventArgs e)
         {
             MenuPrincipal menu = new MenuPrincipal();
             menu.Show();
             this.Hide();
-        }
-
-        private void labelXi_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void labelFuncion2_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

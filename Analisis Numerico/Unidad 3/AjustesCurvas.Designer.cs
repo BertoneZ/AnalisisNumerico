@@ -65,7 +65,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(248, 206, 192);
+            panel1.BackColor = Color.FromArgb(148, 180, 193);
             panel1.CausesValidation = false;
             panel1.Controls.Add(button2);
             panel1.Controls.Add(panelPuntos);
@@ -83,18 +83,18 @@
             panel1.Controls.Add(textBoxY);
             panel1.Controls.Add(textBoxX);
             panel1.Controls.Add(labelPuntos);
-            panel1.Location = new Point(40, 71);
+            panel1.Location = new Point(32, 24);
             panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(590, 923);
+            panel1.Size = new Size(553, 923);
             panel1.TabIndex = 0;
             // 
             // button2
             // 
-            button2.BackColor = Color.FromArgb(197, 54, 120);
+            button2.BackColor = Color.FromArgb(66, 137, 155);
             button2.Font = new Font("Franklin Gothic Demi Cond", 10F);
             button2.ForeColor = SystemColors.ButtonHighlight;
-            button2.Location = new Point(329, 373);
+            button2.Location = new Point(377, 371);
             button2.Margin = new Padding(4, 3, 4, 3);
             button2.Name = "button2";
             button2.Size = new Size(152, 42);
@@ -106,7 +106,7 @@
             // panelPuntos
             // 
             panelPuntos.Controls.Add(dataGridView1);
-            panelPuntos.Location = new Point(17, 212);
+            panelPuntos.Location = new Point(33, 258);
             panelPuntos.Name = "panelPuntos";
             panelPuntos.Size = new Size(289, 364);
             panelPuntos.TabIndex = 17;
@@ -114,14 +114,16 @@
             // dataGridView1
             // 
             dataGridView1.AllowUserToOrderColumns = true;
-            dataGridView1.BackgroundColor = Color.MistyRose;
+            dataGridView1.BackgroundColor = Color.FromArgb(148, 180, 193);
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Columnx, Columny });
-            dataGridView1.GridColor = Color.FromArgb(255, 128, 128);
-            dataGridView1.Location = new Point(-1, 0);
+            dataGridView1.GridColor = Color.FromArgb(148, 180, 193);
+            dataGridView1.Location = new Point(0, -4);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(327, 365);
+            dataGridView1.Size = new Size(327, 371);
             dataGridView1.TabIndex = 17;
             // 
             // Columnx
@@ -140,10 +142,10 @@
             // 
             // button1
             // 
-            button1.BackColor = Color.FromArgb(197, 54, 120);
+            button1.BackColor = Color.FromArgb(66, 137, 155);
             button1.Font = new Font("Franklin Gothic Demi Cond", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.ForeColor = SystemColors.Control;
-            button1.Location = new Point(426, 17);
+            button1.Location = new Point(404, 17);
             button1.Margin = new Padding(4, 3, 4, 3);
             button1.Name = "button1";
             button1.Size = new Size(127, 50);
@@ -166,7 +168,7 @@
             labelGrado.AutoSize = true;
             labelGrado.BackColor = Color.Transparent;
             labelGrado.Font = new Font("Franklin Gothic Demi Cond", 10F);
-            labelGrado.ForeColor = Color.FromArgb(240, 18, 45);
+            labelGrado.ForeColor = Color.FromArgb(40, 64, 92);
             labelGrado.Location = new Point(16, 112);
             labelGrado.Margin = new Padding(4, 0, 4, 0);
             labelGrado.Name = "labelGrado";
@@ -177,13 +179,13 @@
             // 
             // buttonCalcular
             // 
-            buttonCalcular.BackColor = Color.FromArgb(197, 54, 120);
+            buttonCalcular.BackColor = Color.FromArgb(66, 137, 155);
             buttonCalcular.Font = new Font("Franklin Gothic Demi Cond", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             buttonCalcular.ForeColor = SystemColors.Control;
-            buttonCalcular.Location = new Point(329, 495);
+            buttonCalcular.Location = new Point(133, 716);
             buttonCalcular.Margin = new Padding(4, 3, 4, 3);
             buttonCalcular.Name = "buttonCalcular";
-            buttonCalcular.Size = new Size(180, 50);
+            buttonCalcular.Size = new Size(319, 70);
             buttonCalcular.TabIndex = 12;
             buttonCalcular.Text = "CALCULAR";
             buttonCalcular.UseVisualStyleBackColor = false;
@@ -191,10 +193,10 @@
             // 
             // buttonBorrarUltimo
             // 
-            buttonBorrarUltimo.BackColor = Color.FromArgb(197, 54, 120);
+            buttonBorrarUltimo.BackColor = Color.FromArgb(66, 137, 155);
             buttonBorrarUltimo.Font = new Font("Franklin Gothic Demi Cond", 10F);
             buttonBorrarUltimo.ForeColor = SystemColors.ButtonHighlight;
-            buttonBorrarUltimo.Location = new Point(329, 276);
+            buttonBorrarUltimo.Location = new Point(377, 276);
             buttonBorrarUltimo.Margin = new Padding(4, 3, 4, 3);
             buttonBorrarUltimo.Name = "buttonBorrarUltimo";
             buttonBorrarUltimo.Size = new Size(152, 41);
@@ -205,10 +207,10 @@
             // 
             // buttonBorraTodos
             // 
-            buttonBorraTodos.BackColor = Color.FromArgb(197, 54, 120);
+            buttonBorraTodos.BackColor = Color.FromArgb(66, 137, 155);
             buttonBorraTodos.Font = new Font("Franklin Gothic Demi Cond", 10F);
             buttonBorraTodos.ForeColor = SystemColors.ButtonHighlight;
-            buttonBorraTodos.Location = new Point(329, 323);
+            buttonBorraTodos.Location = new Point(377, 323);
             buttonBorraTodos.Margin = new Padding(4, 3, 4, 3);
             buttonBorraTodos.Name = "buttonBorraTodos";
             buttonBorraTodos.Size = new Size(152, 42);
@@ -236,7 +238,7 @@
             labelMetodo.AutoSize = true;
             labelMetodo.BackColor = Color.Transparent;
             labelMetodo.Font = new Font("Franklin Gothic Demi Cond", 10F);
-            labelMetodo.ForeColor = Color.FromArgb(240, 18, 45);
+            labelMetodo.ForeColor = Color.FromArgb(40, 64, 92);
             labelMetodo.Location = new Point(17, 155);
             labelMetodo.Margin = new Padding(4, 0, 4, 0);
             labelMetodo.Name = "labelMetodo";
@@ -270,7 +272,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Franklin Gothic Demi Cond", 10F);
-            label2.ForeColor = Color.FromArgb(240, 18, 45);
+            label2.ForeColor = Color.FromArgb(40, 64, 92);
             label2.Location = new Point(17, 70);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
@@ -304,7 +306,7 @@
             // 
             labelPuntos.AutoSize = true;
             labelPuntos.Font = new Font("Franklin Gothic Demi Cond", 10F);
-            labelPuntos.ForeColor = Color.FromArgb(240, 18, 45);
+            labelPuntos.ForeColor = Color.FromArgb(40, 64, 92);
             labelPuntos.Location = new Point(16, 22);
             labelPuntos.Margin = new Padding(4, 0, 4, 0);
             labelPuntos.Name = "labelPuntos";
@@ -314,7 +316,7 @@
             // 
             // panel2
             // 
-            panel2.BackColor = Color.FromArgb(248, 206, 192);
+            panel2.BackColor = Color.FromArgb(148, 180, 193);
             panel2.Controls.Add(webViewCurvas);
             panel2.Controls.Add(label4);
             panel2.Controls.Add(label3);
@@ -322,10 +324,10 @@
             panel2.Controls.Add(textBoxEfectividad);
             panel2.Controls.Add(textBoxFuncion);
             panel2.Controls.Add(label1);
-            panel2.Location = new Point(655, 71);
+            panel2.Location = new Point(593, 24);
             panel2.Margin = new Padding(4, 3, 4, 3);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1256, 923);
+            panel2.Size = new Size(1053, 923);
             panel2.TabIndex = 1;
             // 
             // webViewCurvas
@@ -333,9 +335,9 @@
             webViewCurvas.AllowExternalDrop = true;
             webViewCurvas.CreationProperties = null;
             webViewCurvas.DefaultBackgroundColor = Color.White;
-            webViewCurvas.Location = new Point(0, 140);
+            webViewCurvas.Location = new Point(-1, 140);
             webViewCurvas.Name = "webViewCurvas";
-            webViewCurvas.Size = new Size(1253, 783);
+            webViewCurvas.Size = new Size(1054, 783);
             webViewCurvas.TabIndex = 18;
             webViewCurvas.ZoomFactor = 1D;
             // 
@@ -343,7 +345,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Franklin Gothic Demi Cond", 10F);
-            label4.ForeColor = Color.FromArgb(240, 18, 45);
+            label4.ForeColor = Color.FromArgb(40, 64, 92);
             label4.Location = new Point(29, 93);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
@@ -356,7 +358,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Franklin Gothic Demi Cond", 10F);
-            label3.ForeColor = Color.FromArgb(240, 18, 45);
+            label3.ForeColor = Color.FromArgb(40, 64, 92);
             label3.Location = new Point(29, 58);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
@@ -395,7 +397,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Franklin Gothic Demi Cond", 10F);
-            label1.ForeColor = Color.FromArgb(240, 18, 45);
+            label1.ForeColor = Color.FromArgb(40, 64, 92);
             label1.Location = new Point(29, 22);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
@@ -407,8 +409,8 @@
             // 
             AutoScaleDimensions = new SizeF(12F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.PaleVioletRed;
-            ClientSize = new Size(1924, 1021);
+            BackColor = Color.FromArgb(40, 64, 92);
+            ClientSize = new Size(1670, 964);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Font = new Font("Franklin Gothic Heavy", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);

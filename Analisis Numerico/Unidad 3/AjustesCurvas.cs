@@ -23,11 +23,10 @@ namespace Analisis_Numerico
         {
             InitializeComponent();
 
-            AplicarEstilo();
+            //AplicarEstilo();
             Form1_Load();
             OcultarCampo();
-            this.FormBorderStyle = FormBorderStyle.None; // Quitar el borde de la ventana
-            this.Padding = new Padding(2);
+           
             dataGridView1.CellValueChanged += DataGridViewPuntos_CellValueChanged;
             dataGridView1.UserDeletedRow += DataGridViewPuntos_UserDeletedRow;
         }
@@ -277,7 +276,6 @@ namespace Analisis_Numerico
         }
 
 
-
         private double SumatoriaDePotencias(List<double[]> puntos, int potencia)
         {
             double suma = 0;
@@ -444,95 +442,6 @@ namespace Analisis_Numerico
             labelGrado.Visible = false;
             textBoxGrado.Visible = false;
             textBoxGrado.Enabled = false;
-        }
-
-
-        public void AplicarEstilo()
-        {
-
-            //hacer mas grande la ventana
-
-            MaximizeBox = true;
-            AutoSize = true;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-            this.CenterToScreen();
-
-            //hacer los paneles del formulario mas grandes
-            //panel1.Size = new Size(650, 900);
-
-            //panel2.Size = new Size(1100, 900);
-
-            this.Height = 900;
-
-
-
-            Panel tituloBarra = new Panel();
-            tituloBarra.Dock = DockStyle.Top;
-            tituloBarra.Height = 50;
-            tituloBarra.BackColor = Color.FromArgb(197, 54, 120);
-
-            Label tituloEtiqueta = new Label();
-            tituloEtiqueta.Text = "Ajustes de Curvas - Análisis Numérico";
-            tituloEtiqueta.ForeColor = Color.FromArgb(255, 255, 255);
-            tituloEtiqueta.Dock = DockStyle.Left;
-            tituloEtiqueta.TextAlign = ContentAlignment.MiddleLeft;
-            tituloEtiqueta.AutoSize = true;
-
-            Button botonCerrar = new Button();
-            botonCerrar.Text = "X";
-            botonCerrar.Dock = DockStyle.Right;
-            botonCerrar.Width = 50;
-            botonCerrar.ForeColor = Color.FromArgb(255, 255, 255);
-            botonCerrar.BackColor = Color.FromArgb(231, 76, 60);
-            botonCerrar.FlatStyle = FlatStyle.Flat;
-            botonCerrar.FlatAppearance.BorderSize = 0;
-
-            botonCerrar.Click += new EventHandler((sender, e) =>
-            {
-                MenuPrincipal menu = new MenuPrincipal();
-                menu.Show();
-                this.Hide();
-            });
-
-            tituloBarra.Controls.Add(tituloEtiqueta);
-            tituloBarra.Controls.Add(botonCerrar);
-
-
-            Button botonMaximizar = new Button();
-            botonMaximizar.Text = "□";
-            botonMaximizar.Dock = DockStyle.Right;
-            botonMaximizar.Width = 50;
-            botonMaximizar.ForeColor = Color.FromArgb(255, 255, 255);
-            botonMaximizar.BackColor = Color.FromArgb(197, 54, 120);
-            botonMaximizar.FlatStyle = FlatStyle.Flat;
-            botonMaximizar.FlatAppearance.BorderSize = 0;
-
-            botonMaximizar.Click += (s, e) =>
-            {
-                this.WindowState = this.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
-            };
-            Button botonMinimizar = new Button();
-            botonMinimizar.Text = "-";
-            botonMinimizar.Dock = DockStyle.Right;
-            botonMinimizar.Width = 50;
-            botonMinimizar.ForeColor = Color.FromArgb(255, 255, 255);
-            botonMinimizar.BackColor = Color.FromArgb(197, 54, 120);
-            botonMinimizar.FlatStyle = FlatStyle.Flat;
-            botonMinimizar.FlatAppearance.BorderSize = 0;
-            botonMinimizar.Click += (s, e) => this.WindowState = FormWindowState.Minimized;
-
-
-            tituloBarra.Controls.Add(tituloEtiqueta);
-            tituloBarra.Controls.Add(botonMinimizar);
-            tituloBarra.Controls.Add(botonMaximizar);
-            tituloBarra.Controls.Add(botonCerrar);
-
-            this.Controls.Add(tituloBarra);
-            tituloBarra.MouseDown += tituloBarra_MouseDown;
-            tituloBarra.MouseMove += tituloBarra_MouseMove;
-            tituloBarra.MouseUp += tituloBarra_MouseUp;
-
         }
 
         private void dataGridViewPuntos_CellContentClick(object sender, DataGridViewCellEventArgs e)
