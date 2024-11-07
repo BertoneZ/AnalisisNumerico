@@ -45,9 +45,12 @@ namespace Analisis_Numerico.Unidad_4
 
         private void BotonCalcular_Click(object sender, EventArgs e)
         {
-
+          
             double xi = double.Parse(textBoxXI.Text);
             double xd = double.Parse(textBoxXD.Text);
+           
+             
+
             string funcion1 = textBoxFUNCION.Text;
             string funcion2 = textBoxFUNCION2.Text;
             double resultado = 0.0;
@@ -383,7 +386,7 @@ namespace Analisis_Numerico.Unidad_4
             string funcion2 = textBoxFUNCION2.Text.Replace(",", "."); // Segunda función
 
             // Dibujar la primera función f(x) en GeoGebra
-            string colorFuncion = "azul";
+            string colorFuncion = "violeta";
             await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('f(x) = {funcion1}')");
             await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('SetColor(f, {colorFuncion})')");
 
@@ -392,7 +395,7 @@ namespace Analisis_Numerico.Unidad_4
             if (!string.IsNullOrEmpty(funcion2))
             {
                 // Si hay una segunda función, la dibujamos
-                string colorFuncion2 = "naranja";
+                string colorFuncion2 = "magenta";
                 await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('g(x) = {funcion2}')");
                 await IntegracionWeb.ExecuteScriptAsync($"ggbApplet.evalCommand('SetColor(g, {colorFuncion2})')");
 

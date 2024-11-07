@@ -182,10 +182,10 @@
             buttonCalcular.BackColor = Color.FromArgb(66, 137, 155);
             buttonCalcular.Font = new Font("Franklin Gothic Demi Cond", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             buttonCalcular.ForeColor = SystemColors.Control;
-            buttonCalcular.Location = new Point(133, 716);
+            buttonCalcular.Location = new Point(356, 451);
             buttonCalcular.Margin = new Padding(4, 3, 4, 3);
             buttonCalcular.Name = "buttonCalcular";
-            buttonCalcular.Size = new Size(319, 70);
+            buttonCalcular.Size = new Size(175, 70);
             buttonCalcular.TabIndex = 12;
             buttonCalcular.Text = "CALCULAR";
             buttonCalcular.UseVisualStyleBackColor = false;

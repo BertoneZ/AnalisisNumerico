@@ -270,7 +270,7 @@ namespace Analisis_Numerico
 
             // Calcular el coeficiente de correlación
             double r = CalcularCoeficienteCorrelacion(PuntosCargados, coeficientes, grado);
-            bool esEfectivo = r > 80; // Ajuste aceptable si r > 80%
+            bool esEfectivo = r >= 80; // Ajuste aceptable si r > 80%
 
             return (funcion, r, esEfectivo);
         }
