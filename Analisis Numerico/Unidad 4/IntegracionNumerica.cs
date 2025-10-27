@@ -124,7 +124,7 @@ namespace Analisis_Numerico.Unidad_4
                 }
             }
             // Asignar el resultado al TextBox con 4 decimales
-            textBoxAREA.Text = resultado.ToString("0.00000");
+            textBoxAREA.Text = resultado.ToString("0.0000000000");
 
             PintarFuncion();
         }
@@ -153,8 +153,8 @@ namespace Analisis_Numerico.Unidad_4
             if (Function.Sintaxis(funcion, 'x'))
             {
                 // Evaluar la función en los puntos xi (a) y xd (b)
-                double fXi = Function.EvaluaFx(xi); // f(a)
-                double fXd = Function.EvaluaFx(xd); // f(b)
+                double fXi = Function.EvaluaFx(xi); 
+                double fXd = Function.EvaluaFx(xd);
 
                 // Calcular el valor de la integral con el método del trapecio
                 return ((fXi + fXd) * (xd - xi)) / 2;
@@ -168,9 +168,6 @@ namespace Analisis_Numerico.Unidad_4
 
 
         }
-
-
-
         //trapecios multiples
         public double CalcularIntegralTrapeciosMultiple(string funcion, double xi, double xd, int n)
         {
@@ -178,7 +175,7 @@ namespace Analisis_Numerico.Unidad_4
             Calculo Function = new Calculo();
 
             // Verificar si la función es válida y tiene 'x' como variable
-            //hacer que acepte logaritmos naturales ln 
+          
             if (funcion.Contains("ln"))
             {
                 funcion = funcion.Replace("ln", "log");
@@ -188,8 +185,6 @@ namespace Analisis_Numerico.Unidad_4
 
             if (Function.Sintaxis(funcion, 'x'))
             {
-                //si la funcion tiene un logaritmo natural, cambiar la funcion para que sea compatible con la clase Calculo
-
                 // Calcular el tamaño del subintervalo
                 double h = (xd - xi) / n;
                 double sum = 0.0;

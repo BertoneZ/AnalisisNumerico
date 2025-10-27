@@ -247,7 +247,7 @@
             textBoxINT.Name = "textBoxINT";
             textBoxINT.Size = new Size(98, 35);
             textBoxINT.TabIndex = 3;
-            textBoxINT.Text = "15";
+            textBoxINT.Text = "1";
             textBoxINT.TextAlign = HorizontalAlignment.Center;
             // 
             // textBoxXD
@@ -258,7 +258,6 @@
             textBoxXD.Name = "textBoxXD";
             textBoxXD.Size = new Size(98, 35);
             textBoxXD.TabIndex = 2;
-            textBoxXD.Text = "2";
             textBoxXD.TextAlign = HorizontalAlignment.Center;
             // 
             // textBoxXI
@@ -269,7 +268,6 @@
             textBoxXI.Name = "textBoxXI";
             textBoxXI.Size = new Size(98, 35);
             textBoxXI.TabIndex = 1;
-            textBoxXI.Text = "-2";
             textBoxXI.TextAlign = HorizontalAlignment.Center;
             // 
             // textBoxFUNCION

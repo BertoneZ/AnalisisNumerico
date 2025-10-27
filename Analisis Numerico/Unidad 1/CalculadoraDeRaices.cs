@@ -45,7 +45,7 @@ namespace Analisis_Numerico
             metodos.SelectedIndexChanged += metodos_SelectedIndexChanged;
             BotonCalcular.Click += button1_Click;
             BotonSalirRaices.Click += BotonSalirRaices_Click;
-            this.FormBorderStyle = FormBorderStyle.None; // Quitar el borde de la ventana
+            this.FormBorderStyle = FormBorderStyle.None; 
             this.Padding = new Padding(2);
             this.Size = new Size(800, 600);
 
@@ -274,61 +274,7 @@ namespace Analisis_Numerico
             }
             raiz.Text = resultado.ToString();
         }
-        //public double MetodosCerrados(string func, double xiCerrado, double xdCerrado, int maxIteraciones, double tole)
-        //{
-        //    double fxi = analizadorFunciones.EvaluaFx(xiCerrado);
-        //    double fxd = analizadorFunciones.EvaluaFx(xdCerrado);
-        //    int iteraciones = 0;
-        //    if (fxi * fxd > 0)
-        //    {
-        //        MessageBox.Show("Vuelva a ingresar xi y xd. No hay raíz en el intervalo.");
-        //        return double.NaN;
-        //    }
-
-        //    if (fxi == 0)
-        //    {
-        //        return xiCerrado; // xiCerrado es raíz
-        //    }
-
-        //    if (fxd == 0)
-        //    {
-        //        return xdCerrado; // xdCerrado es raíz
-        //    }
-
-        //    double xrAnterior = 0;
-        //    double xr = 0;
-        //    double error = double.MaxValue;
-
-        //    for (int i = 0; i < maxIteraciones; i++)
-        //    {
-        //        iteraciones = i;
-        //        xr = CalcularXr(func, xiCerrado, xdCerrado, metodos.SelectedIndex);
-        //        error = Math.Abs((xr - xrAnterior) / xr);
-
-        //        if (Math.Abs(analizadorFunciones.EvaluaFx(xr)) < tole || error < tole)
-        //        {
-        //            iteracionesP.Text = iteraciones.ToString();
-        //            return xr; // xr es raíz
-        //        }
-
-        //        if (fxi * analizadorFunciones.EvaluaFx(xr) > 0)
-        //        {
-        //            xiCerrado = xr;
-        //        }
-        //        else
-        //        {
-        //            xdCerrado = xr;
-        //        }
-        //        iteracionesP.Text = iteraciones.ToString();
-        //        xrAnterior = xr;
-        //        textBoxError.Text = error.ToString();
-        //    }
-        //    MessageBox.Show($"El método no converge dentro de {maxIteraciones} iteraciones");
-
-
-        //    return xr; // Devuelve xr después de iteraciones
-        //}
-
+       
         public double MetodosCerrados(string func, double xiCerrado, double xdCerrado, int maxIteraciones, double tole)
         {
             double fxi = analizadorFunciones.EvaluaFx(xiCerrado);
@@ -463,12 +409,6 @@ namespace Analisis_Numerico
                 double fxd = analizadorFunciones.EvaluaFx(xd);
 
                 xr = (fxd * xi - fxi * xd) / (fxd - fxi);
-
-                //if (double.IsNaN(xr))
-                //{
-                //    MessageBox.Show("El método diverge. No se encuentra raíz.");
-                //    return double.NaN;
-                //}
 
                 error = Math.Abs((xr - xd) / xr);
 

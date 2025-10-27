@@ -68,11 +68,11 @@ namespace Analisis_Numerico.Unidad_2
                 int spacingX = 100; // Espacio horizontal entre TextBoxes
                 int spacingY = 40; // Espacio vertical entre TextBoxes
                 int resultSpacingX = 20;
-                int spacingSol = 190; // Espacio entre las soluciones
+                int spacingSol = 190; 
 
-                panel2.Controls.Clear(); // Limpiar el panel antes de agregar nuevos controles
-                matrixTextBoxes = new TextBox[rows, columns]; // Inicializar la matriz de TextBoxes para coeficientes
-                resultTextBoxes = new TextBox[rows]; // Inicializar el arreglo de TextBoxes para los resultados
+                panel2.Controls.Clear(); 
+                matrixTextBoxes = new TextBox[rows, columns]; 
+                resultTextBoxes = new TextBox[rows];
 
                 // Crear los TextBoxes para los coeficientes y términos independientes
                 for (int row = 0; row < rows; row++)
@@ -351,52 +351,7 @@ namespace Analisis_Numerico.Unidad_2
 
             return x;
         }
-        //codigo por las dudas
-        //private bool EnsureDiagonallyDominant(ref double[,] matrix, ref double[] constants, List<int> filaOrden)
-        //{
-        //    int dimension = matrix.GetLength(0);
-        //    bool isDiagonallyDominant = false;
 
-        //    // Repetir hasta que la matriz sea diagonalmente dominante o hasta que se intente una cantidad razonable de veces
-        //    for (int attempts = 0; attempts < dimension; attempts++)
-        //    {
-        //        isDiagonallyDominant = IsDiagonallyDominant(matrix);
-        //        if (isDiagonallyDominant)
-        //        {
-        //            return true;
-        //        }
-
-        //        // Intentar hacer la matriz diagonalmente dominante mediante intercambio de filas
-        //        for (int i = 0; i < dimension; i++)
-        //        {
-        //            if (matrix[i, i] == 0 || !IsDiagonallyDominant(matrix))
-        //            {
-        //                bool swapped = false;
-        //                for (int k = i + 1; k < dimension; k++)
-        //                {
-        //                    if (matrix[k, i] != 0)
-        //                    {
-        //                        SwapRows(ref matrix, ref constants, i, k);
-        //                        int temp = filaOrden[i];
-        //                        filaOrden[i] = filaOrden[k];
-        //                        filaOrden[k] = temp;
-
-        //                        swapped = true;
-        //                        break;
-        //                    }
-        //                }
-
-        //                if (!swapped)
-        //                {
-        //                    // No se pudo encontrar una fila adecuada para intercambiar
-        //                    break;
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return isDiagonallyDominant;
-        //}
         private bool EnsureDiagonallyDominant(ref double[,] matrix, ref double[] constants, List<int> filaOrden, ref bool pivoteoRealizado)
         {
             int dimension = matrix.GetLength(0);
